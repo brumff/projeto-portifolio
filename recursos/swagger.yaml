@@ -1,0 +1,302 @@
+openapi: 3.0.0
+info:
+  title: API de Livros
+  version: 1.0.0
+  description: API para registrar livros, status de leitura, avaliação e comentários.
+servers:
+  - url: http://localhost:3000
+paths:
+  /api/usuarios/register:
+    post:
+      summary: Cadastrar novo usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [nome, email, senha]
+              properties:
+                nome:
+                  type: string
+                email:
+                  type: string
+                senha:
+                  type: string
+      responses:
+        '201':
+          description: Usuário criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: E-mail já cadastrado ou dados inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/usuarios/login:
+    post:
+      summary: Login do usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, senha]
+              properties:
+                email:
+                  type: string
+                senha:
+                  type: string
+      responses:
+        '200':
+          description: Login realizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '401':
+          description: E-mail ou senha inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/livros:
+    post:
+      summary: Cadastrar livro (autenticado)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [titulo, autor, paginas]
+              properties:
+                titulo:
+                  type: string
+                autor:
+                  type: string
+                paginas:
+                  type: integer
+      responses:
+        '201':
+          description: Livro cadastrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookResponse'
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      summary: Listar livros do usuário (autenticado)
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Lista de livros
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookResponse'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/leitura:
+    post:
+      summary: Atualizar status de leitura (autenticado)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [livroId, paginaAtual]
+              properties:
+                livroId:
+                  type: integer
+                paginaAtual:
+                  type: integer
+      responses:
+        '200':
+          description: Status atualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadingStatusResponse'
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/leitura/{livroId}:
+    get:
+      summary: Consultar status de leitura do livro (autenticado)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: livroId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Status encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadingStatusResponse'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Status não encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/avaliacao:
+    post:
+      summary: Avaliar leitura e comentar (autenticado)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [livroId, nota]
+              properties:
+                livroId:
+                  type: integer
+                nota:
+                  type: integer
+                comentario:
+                  type: string
+      responses:
+        '201':
+          description: Avaliação registrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewResponse'
+        '400':
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Não autenticado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/avaliacao/{livroId}:
+    get:
+      summary: Listar avaliações e comentários de um livro
+      parameters:
+        - in: path
+          name: livroId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lista de avaliações
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReviewResponse'
+components:
+  schemas:
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        email:
+          type: string
+    BookResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        titulo:
+          type: string
+        autor:
+          type: string
+        paginas:
+          type: integer
+        usuarioId:
+          type: integer
+    ReadingStatusResponse:
+      type: object
+      properties:
+        usuarioId:
+          type: integer
+        livroId:
+          type: integer
+        paginaAtual:
+          type: integer
+    ReviewResponse:
+      type: object
+      properties:
+        usuarioId:
+          type: integer
+        livroId:
+          type: integer
+        nota:
+          type: integer
+        comentario:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
