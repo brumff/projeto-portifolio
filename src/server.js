@@ -7,12 +7,22 @@ const reviewRoutes = require('./routes/reviewRoutes');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const path = require('path');
+const cors = require('cors');
 
 const swaggerDocument = YAML.load(path.join(__dirname, '../recursos/swagger.yaml'));
 
 const app = express();
+
+// ⚡ CORS precisa vir antes das rotas
+app.use(cors({
+  // origin: 'http://192.168.1.103:4000', // use o domínio do frontend em produção
+  origin: '*',
+  credentials: true
+}));
+
 app.use(bodyParser.json());
 
+// Rotas
 app.use('/api/usuarios', userRoutes);
 app.use('/api/livros', bookRoutes);
 app.use('/api/leitura', readingRoutes);
