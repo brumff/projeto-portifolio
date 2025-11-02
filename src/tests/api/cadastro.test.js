@@ -42,7 +42,7 @@ describe('Teste de Cadastro de Usuário', () => {
                 .send(bodyCadastro)
 
             expect(resposta.status).to.equal(400);
-           expect(resposta.body).to.have.property('message', 'E-mail já cadastrado');
+            expect(resposta.body).to.have.property('message', 'E-mail já cadastrado');
         });
     });
 });
