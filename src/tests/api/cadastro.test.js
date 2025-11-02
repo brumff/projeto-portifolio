@@ -31,7 +31,7 @@ describe('Teste de Cadastro de Usuário', () => {
 
         });
 
-        it.only('Deve retornar erro com 400 quando e-mail informado já está cadastrado no sistema', async () => {
+        it('Deve retornar erro com 400 quando e-mail informado já está cadastrado no sistema', async () => {
             const bodyCadastro = { ...postCadastro }
             bodyCadastro.nome = 'João da Silva';
             bodyCadastro.email = 'joao@email.com';
