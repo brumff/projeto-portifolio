@@ -54,11 +54,12 @@ describe('Teste de Livros', () => {
         });
 
         describe('GET /api/livros', () => {
-            it('Deve retornar sucesso com 200 quando token do usuário informado e listar os livros cadastrados pelo usuário', async () => {
+            it.only('Deve retornar sucesso com 200 quando token do usuário informado e listar os livros cadastrados pelo usuário', async () => {
                 const resposta = await request(process.env.BASE_URL)
                     .get('/api/livros')
                     .set('Authorization', 'Bearer ' + token)
                 expect(resposta.status).to.equal(200);
+                console.log('Resposta GET /api/livros:', resposta.body);
 
             });
 
