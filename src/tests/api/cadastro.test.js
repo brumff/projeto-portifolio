@@ -44,6 +44,18 @@ describe('Teste de Cadastro de Usuário', () => {
             expect(resposta.status).to.equal(400);
             expect(resposta.body).to.have.property('message', 'E-mail já cadastrado');
         });
+
+        it('Deve retornar erro com 400 quando e-mail informado está no formato inválido', async () => {
+            const bodyCadastro = { ...postCadastro }
+            bodyCadastro.nome = 'João da Silva';
+            bodyCadastro.email = 'joao.com';
+            bodyCadastro.senha = '123456';
+
+            const resposta = await request(process.env.BASE_URL)
+                .post('/api/usuarios/register')
+                .send(bodyCadastro)
+            expect(resposta.status).to.equal(400);
+        });
     });
 });
 
