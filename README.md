@@ -106,3 +106,47 @@ PORT=3000
 
 ---
 
+# Testes de Performance da API
+
+Os testes de performance têm como objetivo avaliar o desempenho e a estabilidade da API sob diferentes cargas de usuários simultâneos. O teste simula um aumento gradual de usuários até 1.000 simultâneos, verificando:
+- **Tempo de resposta**: 95% das requisições devem ser respondidas em até 1 segundo.
+- **Taxa de falhas**: Menos de 1% das requisições devem falhar.
+- **Estabilidade**: O sistema deve se manter estável durante o pico de carga.
+
+---
+
+## **Stack Utilizada**
+
+- **Ferramenta de Teste de Performance**: K6
+- **Linguagem**: JavaScript (para scripts de teste)
+
+---
+
+## **Estrutura do Diretório**
+
+```plaintext
+src/tests/performance/
+└── acesso-simultaneos.js   # Teste de performance para acessos simultâneos
+```
+
+---
+
+## **Comandos para Execução dos Testes**
+
+- **Instalar o K6**:
+  Certifique-se de que o K6 está instalado na sua máquina. Se não estiver, instale-o seguindo as instruções da [documentação oficial](https://k6.io/docs/getting-started/installation/).
+
+- **Executar o teste de performance**:
+  ```bash
+  k6 run src/tests/performance/acesso-simultaneos.js
+  ```
+
+---
+
+## **Links para Documentação das Dependências**
+
+- [K6](https://k6.io/docs/)
+
+---
+
+
