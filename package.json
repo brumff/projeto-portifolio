@@ -4,7 +4,8 @@
   "description": "API Rest para registrar livros, status de leitura e avaliação.",
   "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "test": "mocha --file src/setup.js \"src/tests/**/*.test.js\" --exit"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
