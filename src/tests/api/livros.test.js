@@ -8,7 +8,7 @@ describe('Teste de Livros', () => {
     let token
 
     beforeEach(async () => {
-        token = await obterToken('joao@email.com', '123456')
+        token = await obterToken('maria@email.com', '123456')
     })
 
     describe('POST /api/livros', () => {
@@ -54,7 +54,7 @@ describe('Teste de Livros', () => {
         });
 
         describe('GET /api/livros', () => {
-            it.only('Deve retornar sucesso com 200 quando token do usuário informado e listar os livros cadastrados pelo usuário', async () => {
+            it('Deve retornar sucesso com 200 quando token do usuário informado e listar os livros cadastrados pelo usuário', async () => {
                 const resposta = await request(process.env.BASE_URL)
                     .get('/api/livros')
                     .set('Authorization', 'Bearer ' + token)

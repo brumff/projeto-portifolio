@@ -8,13 +8,13 @@ describe('Teste de Leitura', () => {
     let token
 
     beforeEach(async () => {
-        token = await obterToken('joao@email.com', '123456')
+        token = await obterToken('maria@email.com', '123456')
     })
 
     describe('POST /api/leitura', () => {
         it('Deve retornar sucesso com 200 quando livroId, paginaAtual e token do usuário são informados corretamente', async () => {
             const bodyLeitura = { ...postLeitura }
-            bodyLeitura.livroId = 2;
+            bodyLeitura.livroId = 1;
             bodyLeitura.paginaAtual = 10;
             const resposta = await request(process.env.BASE_URL)
                 .post('/api/leitura')
@@ -26,7 +26,7 @@ describe('Teste de Leitura', () => {
 
         it('Deve retornar erro com 401 quando não for informado o token do usuário corretamente e informado livroId e paginaAtual corretamente', async () => {
             const bodyLeitura = { ...postLeitura }
-            bodyLeitura.livroId = 2;
+            bodyLeitura.livroId = 1;
             bodyLeitura.paginaAtual = 10;
             const resposta = await request(process.env.BASE_URL)
                 .post('/api/leitura')
@@ -50,7 +50,7 @@ describe('Teste de Leitura', () => {
 
         describe('GET /api/leitura', () => {
             it('Deve retornar sucesso com 200 quando token do usuário informado e apresentar status da leitura', async () => {
-                const livroId = 2;
+                const livroId = 1;
                 const resposta = await request(process.env.BASE_URL)
                     .get(`/api/leitura/${livroId}`)
                     .set('Authorization', 'Bearer ' + token)
@@ -61,7 +61,7 @@ describe('Teste de Leitura', () => {
             });
 
             it('Deve retornar erro com 401 quando não for informado o token do usuário corretamente e não apresentar status da leitura', async () => {
-                const livroId = 2;
+                const livroId = 1;
                 const resposta = await request(process.env.BASE_URL)
                     .get(`/api/leitura/${livroId}`)
                 expect(resposta.status).to.equal(401);
