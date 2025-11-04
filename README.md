@@ -2,6 +2,15 @@
 
 API Rest em JavaScript para registrar livros, status da leitura, avaliação e comentários.
 
+## Pré-requisitos
+
+Para executar este projeto, você precisa ter o Node.js instalado em sua máquina.
+
+- **Node.js** (versão 14 ou superior)
+- **npm** (geralmente instalado junto com o Node.js)
+
+📖 **Download e documentação**: [https://nodejs.org/](https://nodejs.org/)
+
 ## Funcionalidades
 - Cadastro de usuário
 - Cadastro de livro (autenticado)
@@ -15,16 +24,41 @@ A autenticação é feita via JWT. Para cadastrar livro, atualizar status de lei
 ## Documentação Swagger
 A documentação da API está disponível em `/api-docs` após iniciar o servidor.
 
+## Configuração do Ambiente
+
+### Arquivo `.env`
+Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
+
+```env
+BASE_URL=http://localhost:3000
+PORT=3000
+```
+
+**Variáveis disponíveis:**
+- `BASE_URL`: URL base da aplicação (padrão: http://localhost:3000)
+- `PORT`: Porta onde o servidor será executado (padrão: 3000)
+
 ## Como executar
-1. Instale as dependências:
+1. Clone o repositório:
+   ```bash
+   git clone <url-do-repositorio>
+   cd projeto-portifolio
+   ```
+
+2. Instale as dependências:
    ```bash
    npm install
    ```
-2. Inicie o servidor:
+
+3. Configure o arquivo `.env` (opcional):
+   Crie um arquivo `.env` na raiz do projeto e adicione as variáveis conforme mostrado na seção "Configuração do Ambiente" acima.
+
+4. Inicie o servidor:
    ```bash
    npm start
    ```
-3. Acesse a documentação em [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+
+5. Acesse a documentação em [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
 
 ## Estrutura do Projeto
 - `src/routes`: Rotas da API
@@ -69,16 +103,6 @@ src/tests/api/
 
 ---
 
-## **Formato do Arquivo `.env`**
-
-O arquivo `.env` deve conter as seguintes variáveis:
-```plaintext
-BASE_URL=http://localhost:3000
-PORT=3000
-```
-
----
-
 ## **Comandos para Execução dos Testes**
 
 - **Instalar dependências**:
@@ -87,7 +111,7 @@ PORT=3000
   ```
 - **Executar todos os testes**:
   ```bash
-  npx mocha
+  npm test
   ```
 - **Executar um arquivo de teste específico**:
   Substitua `<arquivo>` pelo nome do arquivo de teste que deseja executar. Por exemplo:
@@ -134,7 +158,7 @@ src/tests/performance/
 ## **Comandos para Execução dos Testes**
 
 - **Instalar o K6**:
-  Certifique-se de que o K6 está instalado na sua máquina. Se não estiver, instale-o seguindo as instruções da [documentação oficial](https://k6.io/docs/getting-started/installation/).
+  Certifique-se de que o K6 está instalado na sua máquina. Se não estiver, instale-o seguindo as instruções da [documentação oficial](https://grafana.com/docs/k6/latest/set-up/install-k6/).
 
 - **Executar o teste de performance**:
   ```bash
