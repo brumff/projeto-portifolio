@@ -8,13 +8,13 @@ describe('Teste de Avaliação', () => {
     let token
 
     beforeEach(async () => {
-        token = await obterToken('joao@email.com', '123456')
+        token = await obterToken('maria@email.com', '123456')
     })
 
     describe('POST /api/avaliacao', () => {
         it('Deve retornar sucesso com 201 quando livroId, nota, comentario e token do usuário são informados corretamente', async () => {
             const bodyAvaliacao = { ...postAvaliacao }
-            bodyAvaliacao.livroId = 2;
+            bodyAvaliacao.livroId = 1;
             bodyAvaliacao.nota = 5;
             bodyAvaliacao.comentario = "Ótimo livro!";
             const resposta = await request(process.env.BASE_URL)
@@ -27,7 +27,7 @@ describe('Teste de Avaliação', () => {
 
         it('Deve retornar erro com 401 quando não for informado o token do usuário corretamente e informado livroId, nota e comentario corretamente', async () => {
             const bodyAvaliacao = { ...postAvaliacao }
-            bodyAvaliacao.livroId = 2;
+            bodyAvaliacao.livroId = 1;
             bodyAvaliacao.nota = 5;
             bodyAvaliacao.comentario = "Ótimo livro!";
             const resposta = await request(process.env.BASE_URL)
@@ -54,7 +54,7 @@ describe('Teste de Avaliação', () => {
 
         describe('GET /api/avaliacao', () => {
             it('Deve retornar sucesso com 200 quando token do usuário informado e apresentar avaliação do livro', async () => {
-                const livroId = 2;
+                const livroId = 1;
                 const resposta = await request(process.env.BASE_URL)
                     .get(`/api/avaliacao/${livroId}`)
                     .set('Authorization', 'Bearer ' + token)

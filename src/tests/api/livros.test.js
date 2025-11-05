@@ -8,7 +8,7 @@ describe('Teste de Livros', () => {
     let token
 
     beforeEach(async () => {
-        token = await obterToken('joao@email.com', '123456')
+        token = await obterToken('maria@email.com', '123456')
     })
 
     describe('POST /api/livros', () => {
