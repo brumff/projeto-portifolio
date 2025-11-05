@@ -130,6 +130,17 @@ src/tests/api/
 
 ---
 
+## Relatórios de Testes com Mochawesome
+
+O projeto utiliza o **Mochawesome** para gerar relatórios detalhados dos testes automatizados. Esses relatórios são gerados em formato HTML e JSON, permitindo uma visualização clara dos resultados dos testes.
+
+### Como acessar os relatórios
+
+1. Após executar os testes, os relatórios serão gerados na pasta `mochawesome-report/`.
+2. Abra o arquivo `mochawesome-report/mochawesome.html` no navegador para visualizar o relatório em formato HTML.
+
+---
+
 # Testes de Performance da API
 
 Os testes de performance têm como objetivo avaliar o desempenho e a estabilidade da API sob diferentes cargas de usuários simultâneos. O teste simula um aumento gradual de usuários até 1.000 simultâneos, verificando:
